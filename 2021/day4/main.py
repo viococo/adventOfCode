@@ -39,7 +39,7 @@ def checkColumn(board):
       return True
   return False
 
-def check(draw, board):
+def checked(draw, board):
   for index, case in enumerate(board):
     number = case[0]
     if(case[0] == draw):
@@ -51,7 +51,6 @@ def calcRes(draw, board):
   for case in board:
     if(not(case[1])):
       res += int(case[0])
-  print(res)
   return res * int(draw)
 
 def exo1(boards, draws):
@@ -59,32 +58,26 @@ def exo1(boards, draws):
     isWon = False
 
     for board in boards:
-      check(draw, board)
+      checked(draw, board)
       isWon = checkColumn(board) or checkRow(board)
       if isWon:
-        break
-      
-    if isWon:
-      print(calcRes(draw, board))
-      return
+        print(calcRes(draw, board))
+        return
 
 def exo2(boards, draws):
   countBoards = len(boards)
-  print('countBoards', countBoards)
-  drawWhoWin = 0
-  boardWhoWin = []
-  for draw in draws:
-    isWon = False
-    for board in boards:
-      check(draw, board)
-      isWon = checkColumn(board) or checkRow(board)
-      if isWon:
-        drawWhoWin = draw
-        boardWhoWin = board
-        break
-    
-  print(calcRes(drawWhoWin, boardWhoWin))
-  return
+  indexBoardsWhoWin = []
+  finalDraw = 0
+  for draw in (draws):
+    for index, board in enumerate(boards):
+      if not(index in indexBoardsWhoWin):
+        checked(draw, board)
+        if checkColumn(board) or checkRow(board):
+          indexBoardsWhoWin.append(index)
+          if len(indexBoardsWhoWin) == countBoards:
+            finalDraw = draw
+            print(calcRes(draw, board))
+            return 
 
 
 if __name__ == "__main__":
@@ -93,5 +86,5 @@ if __name__ == "__main__":
       boards = parseBoards(boards)
       draws = draws.readline().split(',')
 
-      # exo1(boards, draws)
+      exo1(boards, draws)
       exo2(boards, draws)

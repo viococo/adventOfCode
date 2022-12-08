@@ -1,11 +1,13 @@
+def parse_efls(value):
+  elf1, elf2 = value.split(",")
+  elf1_min, elf1_max = elf1.split("-")
+  elf2_min, elf2_max = elf2.split("-")
+  return elf1_min, elf1_max, elf2_min, elf2_max
+
 def exo1(arr):
   res = 0
   for value in arr:
-    elf1, elf2 = value.split(",")
-    elf1_min, elf1_max = elf1.split("-")
-    elf2_min, elf2_max = elf2.split("-")
-
-    elfs = [elf1_min, elf1_max, elf2_min, elf2_max]
+    elfs = parse_efls(value)
     elf1_min, elf1_max, elf2_min, elf2_max = [int(value) for value in elfs]
 
     if (elf1_min <= elf2_min and elf1_max >= elf2_max) or (elf2_min <= elf1_min and elf2_max >= elf1_max) :
@@ -16,11 +18,7 @@ def exo1(arr):
 def exo2(arr):
   res = 0
   for value in arr:
-    elf1, elf2 = value.split(",")
-    elf1_min, elf1_max = elf1.split("-")
-    elf2_min, elf2_max = elf2.split("-")
-
-    elfs = [elf1_min, elf1_max, elf2_min, elf2_max]
+    elfs = parse_efls(value)
     elf1_min, elf1_max, elf2_min, elf2_max = [int(value) for value in elfs]
 
     if (elf2_min <= elf1_max and elf2_max >= elf1_max) or (elf1_min <= elf2_max and elf1_max >= elf2_max):
